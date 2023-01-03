@@ -1,4 +1,5 @@
 import subprocess
+import bleach
 from os import environ
 from flask_httpauth import HTTPBasicAuth
 from flask import Flask, render_template
@@ -22,32 +23,34 @@ def verify_password(username, password):
 @app.route("/")
 def index():
     output = subprocess.run(
-        ["python3", "~/validatortoolbox_fra/src/app.py", "-s"], capture_output=True
-    ).stdout
+        ["python3", f"{easy_env_fra.toolbox_location}/src/app.py", "-s"], capture_output=True
+    ).stdout.decode().replace("\n", "<br>").replace('\x1b[H\x1b[2J\x1b[3J\x1b[35m', '').strip()
     return render_template("index.html", output=output)
 
 
 @app.route("/test")
 @auth.login_required
 def test():
-    return render_template("text.html")
+    output = "Hello world!"
+    return render_template("index.html", output=output)
 
 
 def setupUserAccount():
-    if not environ.get("USER"):
+    if environ.get("USER") == False:
         user = input("No User Name found, please input a username: ")
         answer = ask_yes_no(f"* You picked {user}, is that correct? (Y/N) ")
         if answer:
             set_var(easy_env_fra.dotenv_file, "USER", user)
         else:
             raise SystemExit(0)
-    if not environ.get("PASSWORD"):
+    if environ.get("PASSWORD") == False:
         password = input("No password found, please input a password now: ")
         answer = ask_yes_no(f"* You picked {password}, is that correct? (Y/N) ")
         if answer:
             set_var(easy_env_fra.dotenv_file, "PASSWORD", password)
         else:
             raise SystemExit(0)
+    return
 
 
 if __name__ == "__main__":
