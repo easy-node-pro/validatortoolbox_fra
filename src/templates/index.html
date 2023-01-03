@@ -5,7 +5,6 @@
         body {
             background-color: rgb(40, 40, 40);
             color: magenta;
-
         }
 
         body a:link {
@@ -16,11 +15,6 @@
             color: #2CEA26;
         }
     </style>
-    <script>
-        setInterval(function () {
-            location.reload();
-        }, 60000); // refresh the page every 60 seconds
-    </script>
 </head>
 
 <body>
@@ -31,6 +25,22 @@
     <div>
         <p>Stats by <a href='https://easynode.pro'>EasyNode.PRO</a></p>
     </div>
+    <div id="countdown">Refreshes in {{ time_left }} seconds</div>
+
+    <script>
+        const interval = 60000; // refresh interval in milliseconds
+        const countdown = document.getElementById('countdown');
+        let timeLeft = interval / 1000; // time left in seconds
+        
+        setInterval(function() {
+          timeLeft--; // decrease time left by 1 second
+          countdown.innerHTML = `Refreshes in ${timeLeft} seconds`;
+        }, 1000); // update time left every second
+
+        setInterval(function () {
+            location.reload();
+        }, interval); // refresh the page every interval
+    </script>
 </body>
 
 </html>

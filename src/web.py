@@ -26,7 +26,8 @@ def index():
     ).stdout.decode().replace("\n", "<br>").replace('\x1b[H\x1b[2J\x1b[3J\x1b[35m', '').strip()
     output = re.sub(r'\x1b[^m]*m', '', output)
     output = bleach.linkify(output)
-    return render_template("index.html", output=output)
+    time_left = 60  # refresh interval in seconds
+    return render_template("index.html", output=output, time_left=time_left)
 
 
 @app.route("/test")
