@@ -1,0 +1,48 @@
+<html>
+
+<head>
+    <style>
+        body {
+            background-color: rgb(40, 40, 40);
+            color: magenta;
+        }
+
+        body a:link {
+            color: #2CEA26;
+        }
+
+        body a:visited {
+            color: #2CEA26;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h1>Validator Toolbox Stats:</h1>
+        <p>{{ output | safe }}</p>
+    </div>
+    <div>
+        <p>Stats by <a href='https://easynode.pro'>EasyNode.PRO</a></p>
+    </div>
+    <div id="countdown">Refreshes in {{ time_left }} seconds.</div>
+    <form action="/logout" method="post">
+        <input type="submit" value="Log Out">
+     </form>
+    <script>
+        const interval = 60000; // refresh interval in milliseconds
+        const countdown = document.getElementById('countdown');
+        let timeLeft = interval / 1000; // time left in seconds
+        
+        setInterval(function() {
+          timeLeft--; // decrease time left by 1 second
+          countdown.innerHTML = `Refreshes in ${timeLeft} seconds. <a href="/">Click Here</a> to refresh now.`;
+        }, 1000); // update time left every second
+
+        setInterval(function () {
+            location.reload();
+        }, interval); // refresh the page every interval
+    </script>
+</body>
+
+</html>
