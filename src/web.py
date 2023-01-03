@@ -20,12 +20,17 @@ def verify_password(username, password):
 
 
 @app.route("/")
-@auth.login_required
 def index():
     output = subprocess.run(
         ["python3", "~/validatortoolbox_fra/src/app.py", "-s"], capture_output=True
     ).stdout
     return render_template("index.html", output=output)
+
+
+@app.route("/test")
+@auth.login_required
+def test():
+    return render_template("text.html")
 
 
 def setupUserAccount():
