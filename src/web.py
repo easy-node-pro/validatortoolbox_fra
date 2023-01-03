@@ -33,14 +33,14 @@ def setupUserAccount():
         user = input("No User Name found, please input a username: ")
         answer = ask_yes_no(f"* You picked {user}, is that correct? (Y/N) ")
         if answer:
-            set_var(easy_env_fra.dot_env, "USER", user)
+            set_var(easy_env_fra.dotenv_file, "USER", user)
         else:
             raise SystemExit(0)
     if not environ.get("PASSWORD"):
         password = input("No password found, please input a password now: ")
         answer = ask_yes_no(f"* You picked {password}, is that correct? (Y/N) ")
         if answer:
-            set_var(easy_env_fra.dot_env, "PASSWORD", password)
+            set_var(easy_env_fra.dotenv_file, "PASSWORD", password)
         else:
             raise SystemExit(0)
 
