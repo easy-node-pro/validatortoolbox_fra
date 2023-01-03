@@ -1,4 +1,4 @@
-import subprocess, re
+import subprocess, re, bleach
 from os import environ
 from flask_httpauth import HTTPBasicAuth
 from flask import Flask, render_template
@@ -25,6 +25,7 @@ def index():
         ["python3", f"{easy_env_fra.toolbox_location}/src/app.py", "-s"], capture_output=True
     ).stdout.decode().replace("\n", "<br>").replace('\x1b[H\x1b[2J\x1b[3J\x1b[35m', '').strip()
     output = re.sub(r'\x1b[^m]*m', '', output)
+    output = bleach.linkify(output)
     return render_template("index.html", output=output)
 
 
